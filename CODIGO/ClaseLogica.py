@@ -192,13 +192,161 @@ class Logica:
 
 
     def Limpiar(self, M1, coordenadas):
+
+        x1 = int(coordenadas[0])
+        y1 = int(coordenadas[2])
+        x2 = int(coordenadas[4])
+        y2 = int(coordenadas[6])
+
+        contadorF = 1
+        contadorC = 1
         matriz = self.encontrarMatriz(M1)
+        nueva_matriz = unamatriz()
+        filas = int(matriz.dato.nFilas)
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.dato == "*":
+                    nueva_matriz.insertarDato(contadorF, contadorC, "*")
+                else:
+                    nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz.dato.nombre + "Limpiar")
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        contadorF = 1
+        contadorC = 1
+        matriz = nueva_matriz
+
+
+        fila = matriz.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if y1 <= casilla.columna <= y2 and x1 <= casilla.fila <= x2:
+                    casilla.dato = "-"
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
+        var = ''
 
     def LineaH(self, M1, coordenadas):
+
+        x1 = int(coordenadas[0])
+        y1 =int(coordenadas[2])
+        largo = int(coordenadas[4])
+
+        contadorF = 1
+        contadorC = 1
         matriz = self.encontrarMatriz(M1)
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.dato == "*":
+                    nueva_matriz.insertarDato(contadorF, contadorC, "*")
+                else:
+                    nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz.dato.nombre + "LineaH")
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        contadorF = 1
+        contadorC = 1
+        matriz = nueva_matriz
+
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if y1 <= casilla.columna <= (y1+largo-1) and casilla.fila ==x1 :
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
 
     def LineaV(self, M1, coordenadas):
+        x1 = int(coordenadas[0])
+        y1 = int(coordenadas[2])
+        largo = int(coordenadas[4])
+
+        contadorF = 1
+        contadorC = 1
         matriz = self.encontrarMatriz(M1)
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.dato == "*":
+                    nueva_matriz.insertarDato(contadorF, contadorC, "*")
+                else:
+                    nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz.dato.nombre + "LineaV")
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        contadorF = 1
+        contadorC = 1
+        matriz = nueva_matriz
+
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.columna == y1 and x1 <= casilla.fila <= (x1+largo -1):
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
 
     def Rectangulo(self, M1, coordenadas):
         matriz = self.encontrarMatriz(M1)
@@ -209,18 +357,208 @@ class Logica:
     def Union(self, M1, M2):
         matriz1 = self.encontrarMatriz(M1)
         matriz2 = self.encontrarMatriz(M2)
+        matriz = self.encontrarMatriz(M1)
+        contadorF = 1
+        contadorC = 1
+
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz1.dato.nombre + "Union" + matriz2.dato.nombre)
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        fila1 = matriz1.dato.UnaFila.primero
+        fila2 = matriz2.dato.UnaFila.primero
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla1 = fila1.accesoNodo
+            casilla2 = fila2.accesoNodo
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla1.dato == "*" or casilla2.dato == "*":
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+                casilla1 = casilla1.derecha
+                casilla2 = casilla2.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+            fila1 = fila1.siguiente
+            fila2 = fila2.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
+
+
+
 
     def Intereseccion(self, M1, M2):
         matriz1 = self.encontrarMatriz(M1)
         matriz2 = self.encontrarMatriz(M2)
+        matriz = self.encontrarMatriz(M1)
+        contadorF = 1
+        contadorC = 1
+
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz1.dato.nombre + "Interseccion" + matriz2.dato.nombre)
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        fila1 = matriz1.dato.UnaFila.primero
+        fila2 = matriz2.dato.UnaFila.primero
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla1 = fila1.accesoNodo
+            casilla2 = fila2.accesoNodo
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla1.dato == "*"and casilla2.dato== "*":
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+                casilla1 = casilla1.derecha
+                casilla2 = casilla2.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+            fila1 = fila1.siguiente
+            fila2 = fila2.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
+
 
     def Diferencia(self,M1, M2):
         matriz1 = self.encontrarMatriz(M1)
         matriz2 = self.encontrarMatriz(M2)
+        matriz = self.encontrarMatriz(M1)
+        contadorF = 1
+        contadorC = 1
+
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz1.dato.nombre + "Diferencia" + matriz2.dato.nombre)
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        fila1 = matriz1.dato.UnaFila.primero
+        fila2 = matriz2.dato.UnaFila.primero
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla1 = fila1.accesoNodo
+            casilla2 = fila2.accesoNodo
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla1.dato == "*" and casilla2.dato != "*":
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+                casilla1 = casilla1.derecha
+                casilla2 = casilla2.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+            fila1 = fila1.siguiente
+            fila2 = fila2.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
 
     def DiferenciaSimetrica(self, M1, M2):
         matriz1 = self.encontrarMatriz(M1)
         matriz2 = self.encontrarMatriz(M2)
+        matriz = self.encontrarMatriz(M1)
+        contadorF = 1
+        contadorC = 1
+
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz1.dato.nombre + "Diferencia Simetrica" + matriz2.dato.nombre)
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        fila1 = matriz1.dato.UnaFila.primero
+        fila2 = matriz2.dato.UnaFila.primero
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla1 = fila1.accesoNodo
+            casilla2 = fila2.accesoNodo
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla1.dato == "*" and casilla2.dato != "*":
+                    casilla.dato = "*"
+                if casilla1.dato != "*" and casilla2.dato == "*":
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+                casilla1 = casilla1.derecha
+                casilla2 = casilla2.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+            fila1 = fila1.siguiente
+            fila2 = fila2.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
 
     def encontrarMatriz(self, nombre):
         matrizaux = None

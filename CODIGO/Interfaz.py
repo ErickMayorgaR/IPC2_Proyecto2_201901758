@@ -145,6 +145,7 @@ class InterfazP:
 
     def selecionarMatrices(self):
         contadorMatrices = 0
+        Image.MAX_IMAGE_PIXELS = None
 
         if self.selectM1.get() != "" or self.selectM2.get() != "":
             matrizaux = None
@@ -227,7 +228,7 @@ class InterfazP:
         self.ComboboxOp.grid(row=0, column=0, padx=20, pady=20)
 
         self.entradaTexto = ttk.Entry(self.ventanaOp)
-        self.entradaTexto.config(width = 20, height = 1)
+        self.entradaTexto.config(width = 40)
         self.entradaTexto.grid(row = 1, column = 0, padx = 20, pady = 20)
 
         botonseleccionar = ttk.Button(self.ventanaOp, text="Seleccionar", command=lambda: self.seleccionarOperaciones())
@@ -257,7 +258,7 @@ class InterfazP:
         self.ComboboxOp.config(width=20, height=1)
         self.ComboboxOp.grid(row=0, column=0, padx=20, pady=20)
 
-        botonseleccionar = ttk.Button(self.ventanaOp, text="Seleccionar", command=lambda: self.selecionarMatrices())
+        botonseleccionar = ttk.Button(self.ventanaOp, text="Seleccionar", command=lambda: self.seleccionarOperaciones())
         botonseleccionar.grid(row=0, column=3, padx=10, pady=20)
 
 
@@ -275,9 +276,17 @@ class InterfazP:
         elif self.selectM1.get() == "Agregar Linea Vertical":
             nueva = self.logicaMatrices.LineaH(self.nomMatriz1, self.entradaTexto.get())
         elif self.selectM1.get() == "Agregar Rectangulo":
+            nueva = self.logicaMatrices.Rectangulo(self.nomMatriz1, self.entradaTexto.get())
         elif self.selectM1.get() == "Agregar Triangulo Rectangulo ":
-
-
+            nueva = self.logicaMatrices.Triagulo(self.nomMatriz1, self.entradaTexto.get())
+        elif self.selectM1.get() == "Union":
+            nueva = self.logicaMatrices.Union(self.nomMatriz1, self.nomMatriz2)
+        elif self.selectM1.get() == "Intersección":
+            nueva = self.logicaMatrices.Intereseccion(self.nomMatriz1, self.nomMatriz2)
+        elif self.selectM1.get() ==  "Diferencia":
+            nueva = self.logicaMatrices.Diferencia(self.nomMatriz1, self.nomMatriz2)
+        elif self.selectM1.get() ==  "Diferencia Simetrica":
+            nueva = self.logicaMatrices.DiferenciaSimetrica(self.nomMatriz1, self.nomMatriz2)
 
         self.colocarResultados(nueva)
 
