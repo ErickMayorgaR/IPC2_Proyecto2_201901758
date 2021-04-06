@@ -3,9 +3,11 @@ from MatrizOrtogonal.NodoDato import NodoDato
 from MatrizOrtogonal.NodoEncabezado import NodoEncabezado
 from MatrizOrtogonal.ListaEncabezados import ListaEncabezado
 
-class UnaMatriz:
-    def __init__(self, nombre):
-        self.nombre = nombre
+class unamatriz:
+    def __init__(self):
+        self.nombre = None
+        self.nFilas = None
+        self.nColumnas = None
         self.UnaFila = ListaEncabezado()
         self.UnaColumna = ListaEncabezado()
 
@@ -40,6 +42,8 @@ class UnaMatriz:
                     unNodo.izquierda = actual
 
 
+
+
         auxColumna = self.UnaColumna.ObtenerEncabezado(columna)
 
         if auxColumna == None:
@@ -47,10 +51,10 @@ class UnaMatriz:
             auxColumna.accesoNodo = unNodo
             self.UnaColumna.insertaEncabezado(auxColumna)
         else:
-            if unNodo.fila < auxColumna.accesoNodo.Fila:
+            if unNodo.fila < auxColumna.accesoNodo.fila:
                 unNodo.abajo = auxFila.accesoNodo
-                auxFila.accesoNodo.arriba = unNodo
-                auxFila.accesoNodo = unNodo
+                auxColumna.accesoNodo.arriba = unNodo
+                auxColumna.accesoNodo = unNodo
             else:
                 actual = auxColumna.accesoNodo
                 while actual.abajo != None:
