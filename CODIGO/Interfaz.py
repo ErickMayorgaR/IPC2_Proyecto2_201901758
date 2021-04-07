@@ -7,6 +7,7 @@ import tkinter as tk
 
 
 class InterfazP:
+    reporte = []
     selectM1= None
     selectM2 = None
 
@@ -57,7 +58,7 @@ class InterfazP:
         botonOperaciones = ttk.Button(self.panelV1, text= "Operaciones", command = lambda:self.VentanaOperaciones() )
         botonOperaciones.grid(row = 0, column = 1,padx = 10, pady = 20)
 
-        botonReportes = ttk.Button(self.panelV1, text= "Reportes")
+        botonReportes = ttk.Button(self.panelV1, text= "Reportes",command=lambda: self.generarReporte())
         botonReportes.grid(row = 0, column = 2,padx = 10, pady = 20)
 
         botonAyuda = ttk.Button(self.panelV1, text = "Ayuda")
@@ -202,7 +203,11 @@ class InterfazP:
             messagebox.showerror("", "Seleccione una Matriz")
 
         if contadorMatrices == 1:
+            self.labelMatriz2 = ttk.Label(self.panelV1)
+            self.labelMatriz2.config(bg="White", width="40", height="20")
+            self.labelMatriz2.grid(row=1, column=1, padx=10, pady=20)
             self.operacionesunaM()
+
         elif contadorMatrices == 2:
             self.operacionesdosM()
 
@@ -263,6 +268,7 @@ class InterfazP:
 
 
     def seleccionarOperaciones(self):
+        self.ventanaOp.destroy()
         if self.selectM1.get() == "Rotación Horizontal":
             nueva = self.logicaMatrices.rotacionH(self.nomMatriz1)
         elif self.selectM1.get() == "Rotación Vertical":
@@ -303,7 +309,8 @@ class InterfazP:
         self.labelMatriz3.grid(row=1, column=2, padx=10, pady=20)
         self.labelMatriz3.image = imagenv2
 
-
+    def generarReporte(self):
+        self.logicaMatrices.generarReporte()
 
 
 

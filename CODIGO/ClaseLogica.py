@@ -1,13 +1,17 @@
 from MatrizOrtogonal.UnaMatriz import unamatriz
 import os
 from MatrizOrtogonal import *
+import time
 from ListaSimple.ListaSimple import ListaS
 import xml.etree.ElementTree as ET
 
 class Logica:
     listaMatrices = ListaS()
+    reporte = []
 
     def almacenaDatos(self, UnXML):
+        contlleno = 0
+        contvacio = 0
 
         arbol = ET.parse(UnXML)
         raiz = arbol.getroot()
@@ -39,8 +43,20 @@ class Logica:
 
                             contadorColumna +=1
                             unaMatriz.insertarDato(contadorFila,contadorColumna,dato)
+                            if dato == "*":
+                                contlleno += 1
+                            else:
+                                contvacio +=1
 
             self.listaMatrices.insertar(unaMatriz)
+
+            fecha = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
+            self.reporte.append(fecha + unaMatriz.nombre + "-Espacios Llenos "+ str(contlleno)+
+                                "-Espacios Vacios"+ str(contvacio))
+
+            contlleno = 0
+            contvacio = 0
+
         ver= 0
 
     def graficaMatriz(self, Matriz):
@@ -349,10 +365,121 @@ class Logica:
         return nueva_matriz.nombre
 
     def Rectangulo(self, M1, coordenadas):
+        x1 = int(coordenadas[0])
+        y1 = int(coordenadas[2])
+        tamF= int(coordenadas[4])
+        tamC = int(coordenadas[6])
+
+        contadorF = 1
+        contadorC = 1
         matriz = self.encontrarMatriz(M1)
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.dato == "*":
+                    nueva_matriz.insertarDato(contadorF, contadorC, "*")
+                else:
+                    nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz.dato.nombre + "Rectangulo")
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        contadorF = 1
+        contadorC = 1
+        matriz = nueva_matriz
+
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if y1 <= casilla.columna < (y1+ tamC) and x1 <= casilla.fila < (x1+ tamF):
+                    casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
+
 
     def Triagulo(self, M1, coordenadas):
+        x1 = int(coordenadas[0])
+        y1 = int(coordenadas[2])
+        tam = int(coordenadas[4])
+
+
+        contadorF = 1
+        contadorC = 1
         matriz = self.encontrarMatriz(M1)
+        nueva_matriz = unamatriz()
+
+        fila = matriz.dato.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if casilla.dato == "*":
+                    nueva_matriz.insertarDato(contadorF, contadorC, "*")
+                else:
+                    nueva_matriz.insertarDato(contadorF, contadorC, "_")
+                contadorC += 1
+                casilla = casilla.derecha
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        nueva_matriz.nombre = (matriz.dato.nombre + "Triangulo")
+        nueva_matriz.nColumnas = matriz.dato.nColumnas
+        nueva_matriz.nFilas = matriz.dato.nFilas
+
+        opero = False
+        contadorF = 1
+        contadorC = 1
+        contadortamF = tam
+        contadortamC = 0
+        matriz = nueva_matriz
+
+        fila = nueva_matriz.UnaFila.primero
+        while fila != None:
+            casilla = fila.accesoNodo
+            while casilla != None:
+                if contadortamC < tam:
+                    if casilla.columna == y1 and casilla.fila == (x1- contadortamF+ 1):
+                        opero = True
+                        casilla.dato = "*"
+                    if y1 <= casilla.columna <=(y1 + contadortamC) and casilla.fila == (x1 - contadortamF + 1):
+                        opero = True
+                        casilla.dato = "*"
+                contadorC += 1
+                casilla = casilla.derecha
+            if opero == True:
+                opero = False
+                contadortamC +=1
+                contadortamF -= 1
+
+            contadorC = 1
+            contadorF += 1
+            fila = fila.siguiente
+
+        self.listaMatrices.insertar(nueva_matriz)
+        graficar = self.encontrarMatriz(nueva_matriz.nombre)
+        self.graficaMatriz(graficar)
+
+        return nueva_matriz.nombre
+
 
     def Union(self, M1, M2):
         matriz1 = self.encontrarMatriz(M1)
@@ -401,7 +528,6 @@ class Logica:
         self.listaMatrices.insertar(nueva_matriz)
         graficar = self.encontrarMatriz(nueva_matriz.nombre)
         self.graficaMatriz(graficar)
-
         return nueva_matriz.nombre
 
 
@@ -528,7 +654,7 @@ class Logica:
             contadorF += 1
             fila = fila.siguiente
 
-        nueva_matriz.nombre = (matriz1.dato.nombre + "Diferencia Simetrica" + matriz2.dato.nombre)
+        nueva_matriz.nombre = (matriz1.dato.nombre + "DiferenciaSimetrica" + matriz2.dato.nombre)
         nueva_matriz.nColumnas = matriz.dato.nColumnas
         nueva_matriz.nFilas = matriz.dato.nFilas
 
@@ -573,6 +699,29 @@ class Logica:
             matrizaux = matrizaux.siguiente
 
         return  matrizEncontrada
+
+    def generarReporte(self):
+        tam = len(self.reporte)
+        auxtam = tam + 1
+        saltoL = "\n"
+        reporte = ""
+        reporte += '<!DOCTYPE html>' + "\n"+ '<html lang="en">' + '\n' +  '<head>' + '\n' + '<meta charset="UTF-8">'+ \
+                     '\n' + '<meta name="viewport" content="width=device-width, initial-scale=1.0">' + '\n' + \
+                   '<title>Formulario</title>' + '\n' + '<link rel="stylesheet" type="text/css"  media="">' + '\n' +\
+              '</head>' + '\n' + '<center>' + '\n' + '<body>' + '\n' + '<header>' + '\n' + '<h1>Reporte</h1>' + '\n' + '</header>'
+        reporte += saltoL
+        for i in range(tam):
+            reporte += '<p>' + self.reporte[i] +'</p>'
+            reporte += saltoL
+
+        reporte += '</body> \n </center> \n </html>'
+
+        with open("Reporte.html", 'w', encoding='utf-8') as file:
+            file.write(reporte)
+            file.close()
+
+
+        os.system("Reporte.html")
 
 
 
