@@ -268,7 +268,7 @@ class InterfazP:
 
 
     def seleccionarOperaciones(self):
-        self.ventanaOp.destroy()
+
         if self.selectM1.get() == "Rotación Horizontal":
             nueva = self.logicaMatrices.rotacionH(self.nomMatriz1)
         elif self.selectM1.get() == "Rotación Vertical":
@@ -280,7 +280,7 @@ class InterfazP:
         elif self.selectM1.get() == "Agregar Linea Horizontal":
             nueva = self.logicaMatrices.LineaH(self.nomMatriz1,self.entradaTexto.get())
         elif self.selectM1.get() == "Agregar Linea Vertical":
-            nueva = self.logicaMatrices.LineaH(self.nomMatriz1, self.entradaTexto.get())
+            nueva = self.logicaMatrices.LineaV(self.nomMatriz1, self.entradaTexto.get())
         elif self.selectM1.get() == "Agregar Rectangulo":
             nueva = self.logicaMatrices.Rectangulo(self.nomMatriz1, self.entradaTexto.get())
         elif self.selectM1.get() == "Agregar Triangulo Rectangulo ":
@@ -293,7 +293,7 @@ class InterfazP:
             nueva = self.logicaMatrices.Diferencia(self.nomMatriz1, self.nomMatriz2)
         elif self.selectM1.get() ==  "Diferencia Simetrica":
             nueva = self.logicaMatrices.DiferenciaSimetrica(self.nomMatriz1, self.nomMatriz2)
-
+        self.ventanaOp.destroy()
         self.colocarResultados(nueva)
 
 

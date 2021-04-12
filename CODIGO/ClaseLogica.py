@@ -61,9 +61,9 @@ class Logica:
 
     def graficaMatriz(self, Matriz):
         nombre = Matriz.dato.nombre
-
+#################
         imagen = ""
-        encabezadoGraphviz = 'digraph G {' + '\n' + ' TABLA [shape = plaintext label =< ' + '\n' + ' <TABLE border="0" cellspacing="1" cellborder = "1" cellpadding = "250">'
+        encabezadoGraphviz = 'digraph G {' + '\n' + ' TABLA [shape = plaintext label =< ' + '\n' + ' <TABLE border="0" cellspacing="1" cellborder = "1" cellpadding = "2">'
         saltoLinea = '\n'
         casillaNegro = '<TD bgcolor="black"></TD>'
         casillaBlanco = '<TD></TD>'
@@ -195,10 +195,11 @@ class Logica:
 
 
 
-        nueva_matriz.nombre = (matriz.dato.nombre + "Transpuesta    ")
-        nueva_matriz.nColumnas = matriz.dato.nColumnas
-        nueva_matriz.nFilas = matriz.dato.nFilas
-
+        nueva_matriz.nombre = (matriz.dato.nombre + "Transpuesta")
+#####################################
+        nueva_matriz.nColumnas = matriz.dato.nFilas
+        nueva_matriz.nFilas = matriz.dato.nColumnas
+################################################################3
         self.listaMatrices.insertar(nueva_matriz)
         graficar = self.encontrarMatriz(nueva_matriz.nombre)
         self.graficaMatriz(graficar)
@@ -208,11 +209,11 @@ class Logica:
 
 
     def Limpiar(self, M1, coordenadas):
-
-        x1 = int(coordenadas[0])
-        y1 = int(coordenadas[2])
-        x2 = int(coordenadas[4])
-        y2 = int(coordenadas[6])
+        coordenada = coordenadas.split(",")
+        x1 = int(coordenada[0])
+        y1 = int(coordenada[1])
+        x2 = int(coordenada[2])
+        y2 = int(coordenada[3])
 
         contadorF = 1
         contadorC = 1
@@ -263,10 +264,10 @@ class Logica:
         var = ''
 
     def LineaH(self, M1, coordenadas):
-
-        x1 = int(coordenadas[0])
-        y1 =int(coordenadas[2])
-        largo = int(coordenadas[4])
+        coordenada = coordenadas.split(",")
+        x1 = int(coordenada[0])
+        y1 =int(coordenada[1])
+        largo = int(coordenada[2])
 
         contadorF = 1
         contadorC = 1
@@ -315,9 +316,10 @@ class Logica:
         return nueva_matriz.nombre
 
     def LineaV(self, M1, coordenadas):
-        x1 = int(coordenadas[0])
-        y1 = int(coordenadas[2])
-        largo = int(coordenadas[4])
+        coordenada = coordenadas.split(",")
+        x1 = int(coordenada[0])
+        y1 = int(coordenada[1])
+        largo = int(coordenada[2])
 
         contadorF = 1
         contadorC = 1
@@ -365,10 +367,11 @@ class Logica:
         return nueva_matriz.nombre
 
     def Rectangulo(self, M1, coordenadas):
-        x1 = int(coordenadas[0])
-        y1 = int(coordenadas[2])
-        tamF= int(coordenadas[4])
-        tamC = int(coordenadas[6])
+        coordenada = coordenadas.split(",")
+        x1 = int(coordenada[0])
+        y1 = int(coordenada[1])
+        tamF= int(coordenada[2])
+        tamC = int(coordenada[3])
 
         contadorF = 1
         contadorC = 1
@@ -417,9 +420,10 @@ class Logica:
 
 
     def Triagulo(self, M1, coordenadas):
-        x1 = int(coordenadas[0])
-        y1 = int(coordenadas[2])
-        tam = int(coordenadas[4])
+        coordenada = coordenadas.split(",")
+        x1 = int(coordenada[0])
+        y1 = int(coordenada[1])
+        tam = int(coordenada[2])
 
 
         contadorF = 1
